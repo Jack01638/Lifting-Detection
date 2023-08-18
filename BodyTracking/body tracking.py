@@ -8,9 +8,9 @@ from exercises import *
 ### Init Variables
 stage = None
 completed = False
+rep_dict = {}
 
 # Exercises, Sets and Reps
-rep_dict = {}
 '''
 ### Asking for and Setting up reps and sets
 
@@ -36,9 +36,9 @@ rep_dict = {}
         set up sets and reps
 ###
 '''
-rep_dict["Bicep Curl"] = [6,10]
 
-# Create copy of dict for reference numbers
+rep_dict["Bicep Curl"] = [6,10] #for testing purposes, 6 sets of 10 reps bicep curls
+# Create deep copy of dict for reference numbers
 rep_info_dict = copy.deepcopy(rep_dict)
 
 
