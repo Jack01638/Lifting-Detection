@@ -5,10 +5,14 @@ import mediapipe as mp
 import copy
 from exercises import *
 
+
+
 ### Init Variables
 stage = None
 completed = False
-rep_dict = {}
+rep_dict = {} #exercise names in rep dict must match exercise variable names in exercise functions
+
+
 
 # Exercises, Sets and Reps
 '''
@@ -37,7 +41,8 @@ rep_dict = {}
 ###
 '''
 
-rep_dict["Bicep Curl"] = [6,10] #for testing purposes, 6 sets of 10 reps bicep curls
+rep_dict["Bicep Curl"] = [5,10] #for testing purposes, 6 sets of 10 reps bicep curls
+rep_dict["Squat"] = [5,12]
 # Create deep copy of dict for reference numbers
 rep_info_dict = copy.deepcopy(rep_dict)
 
@@ -62,7 +67,10 @@ with mp_pose.Pose(min_detection_confidence=0.8, min_tracking_confidence=0.8) as 
       
         # Make detection
         results = pose.process(image)
-        landmarks = results.pose_landmarks.landmark
+        try:
+            landmarks = results.pose_landmarks.landmark
+        except:
+            pass
         # Recolor back to BGR
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
@@ -70,7 +78,7 @@ with mp_pose.Pose(min_detection_confidence=0.8, min_tracking_confidence=0.8) as 
         # Extract landmarks
         try:
             ### Exercise Function HERE ### (will depend on training plan etc)
-            stage, completed = BicepCurl(landmarks,mp_pose,stage,completed,rep_dict,rep_info_dict)
+            stage, completed = Squat(landmarks,mp_pose,stage,completed,rep_dict,rep_info_dict)
             ###          ###           ###
             
         except: 
