@@ -208,6 +208,37 @@ def LatSideRaise(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
         
     return stage, completed
 
+def ShoulderPress(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
+    # Set exercise to reference in dict
+    exercise = "Shoulder Press"
+
+    # Get coordinates of joints
+    ear = [
+        landmarks[mp_pose.PoseLandmark.LEFT_EAR.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_EAR.value].y]
+    wrist = [
+        landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y,]
+    elbow = [
+        landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y,]
+    shoulder = [
+        landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y,]
+
+    # Calculate angles
+    angle = calculate_angle(shoulder, elbow, wrist)
+
+    # Counting reps
+    if wrist[1] > ear[1]:
+        stage = "down"
+    if wrist[1] < ear[1] and angle > 165 and stage == "down" and completed == False:
+        stage = "up"
+        completed = CheckComplete(rep_dict,exercise,rep_info_dict)
+        Display(rep_dict,rep_info_dict,exercise)
+        
+    return stage, completed
+
 
 """
 
@@ -299,27 +330,6 @@ def Deadlift(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
     return stage, completed
 
 
-def ShoulderPress(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
-    # Set exercise to reference in dict
-    exercise = "Shoulder Press"
-
-    # Get coordinates of joints
-    joint = [landmarks[mp_pose.PoseLandmark."JOINT_REFERENCE".value].x,landmarks[mp_pose.PoseLandmark."JOINT_REFERENCE".value].y]
-
-    # Calculate angles
-    angle = calculate_angle(joint1, joint2, joint3) #add joint names
-
-    # Counting reps
-    if ? : #add condition for "down" stage
-        stage = "down"
-    if ? and stage == "down" and completed == False: #add conditions for "up" stage
-        stage = "up"
-        completed = CheckComplete(rep_dict,exercise,rep_info_dict)
-        Display(rep_dict,rep_info_dict,exercise)
-        
-    return stage, completed
-
-
 def Shrug(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict): 
     # Set exercise to reference in dict
     exercise = "Dumbbell Shrug" 
@@ -340,9 +350,6 @@ def Shrug(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
         
     return stage, completed
 
-
-
-    
 
 def TricepExtension(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict): 
     # Set exercise to reference in dict
