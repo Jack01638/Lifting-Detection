@@ -6,16 +6,16 @@ import copy
 from exercises import *
 
 
-
 ### Init Variables
 stage = None
 completed = False
-rep_dict = {} #exercise names in rep dict must match exercise variable names in exercise functions
-
+rep_dict = (
+    {}
+)  # exercise names in rep dict must match exercise variable names in exercise functions
 
 
 # Exercises, Sets and Reps
-'''
+"""
 ### Asking for and Setting up reps and sets
 
     check for saved file:
@@ -39,13 +39,13 @@ rep_dict = {} #exercise names in rep dict must match exercise variable names in 
     if no saved file:
         set up sets and reps
 ###
-'''
+"""
 
-rep_dict["Bicep Curl"] = [5,10] #for testing purposes, 6 sets of 10 reps bicep curls
-rep_dict["Squat"] = [5,12]
+rep_dict["Bicep Curl"] = [5, 10]  # for testing purposes, 6 sets of 10 reps bicep curls
+rep_dict["Squat"] = [5, 12]
+rep_dict["Row"] = [10, 15]
 # Create deep copy of dict for reference numbers
 rep_info_dict = copy.deepcopy(rep_dict)
-
 
 
 ##### Mediapipe Tracking & Detection #####
@@ -57,14 +57,16 @@ mp_pose = mp.solutions.pose
 cap = cv2.VideoCapture(0)
 
 ## Setup mediapipe instance
-with mp_pose.Pose(min_detection_confidence=0.8, min_tracking_confidence=0.8) as pose: #start tracking and detection
-    while cap.isOpened(): #while video feed is on
+with mp_pose.Pose(
+    min_detection_confidence=0.8, min_tracking_confidence=0.8
+) as pose:  # start tracking and detection
+    while cap.isOpened():  # while video feed is on
         ret, frame = cap.read()
-        
+
         # Recolor image to RGB
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         image.flags.writeable = False
-      
+
         # Make detection
         results = pose.process(image)
         try:
@@ -74,26 +76,30 @@ with mp_pose.Pose(min_detection_confidence=0.8, min_tracking_confidence=0.8) as 
         # Recolor back to BGR
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        
+
         # Extract landmarks
         try:
             ### Exercise Function HERE ### (will depend on training plan etc)
-            stage, completed = Squat(landmarks,mp_pose,stage,completed,rep_dict,rep_info_dict)
+            stage, completed = Row(
+                landmarks, mp_pose, stage, completed, rep_dict, rep_info_dict
+            )
             ###          ###           ###
-            
-        except: 
-            pass
-        
-        
-        # Render detections
-        mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
-                                mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2), 
-                                mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2) 
-                                 )               
-        
-        cv2.imshow('Mediapipe Feed', image)
 
-        if cv2.waitKey(10) & 0xFF == ord('q'):
+        except:
+            pass
+
+        # Render detections
+        mp_drawing.draw_landmarks(
+            image,
+            results.pose_landmarks,
+            mp_pose.POSE_CONNECTIONS,
+            mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=2, circle_radius=2),
+            mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=2),
+        )
+
+        cv2.imshow("Mediapipe Feed", image)
+
+        if cv2.waitKey(10) & 0xFF == ord("q"):
             break
 
     cap.release()

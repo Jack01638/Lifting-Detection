@@ -2,22 +2,24 @@
 import numpy as np
 
 
-
 ### Misc. functions
-def calculate_angle(a,b,c):
-    a = np.array(a) # End point 1
-    b = np.array(b) # Mid point
-    c = np.array(c) # End point 2
-    
-    rads = np.arctan2(c[1]-b[1], c[0]-b[0]) - np.arctan2(a[1]-b[1], a[0]-b[0])   # Angle in radians
-    angle = np.abs(rads*180.0/np.pi)                                             # Convert radians to degrees
+def calculate_angle(a, b, c):
+    a = np.array(a)  # End point 1
+    b = np.array(b)  # Mid point
+    c = np.array(c)  # End point 2
 
-    if angle > 180.0:   # If joints wrong way around, correct the values
-        angle = 360-angle
+    rads = np.arctan2(c[1] - b[1], c[0] - b[0]) - np.arctan2(
+        a[1] - b[1], a[0] - b[0]
+    )  # Angle in radians
+    angle = np.abs(rads * 180.0 / np.pi)  # Convert radians to degrees
+
+    if angle > 180.0:  # If joints wrong way around, correct the values
+        angle = 360 - angle
 
     return angle
 
-def CheckComplete(rep_dict, exercise,rep_info_dict):
+
+def CheckComplete(rep_dict, exercise, rep_info_dict):
     completed = False
 
     # Count down reps
@@ -32,21 +34,29 @@ def CheckComplete(rep_dict, exercise,rep_info_dict):
     # Set exercise as complete
     if rep_dict[exercise][0] == 0 and rep_dict[exercise][1] == 0:
         completed = True
-        
+
     return completed
-    
+
+
 def Display(rep_dict, rep_info_dict, exercise):
-    print("""Exercise: {}
+    print(
+        """Exercise: {}
 Sets Left {} / {}
 Reps Left {} / {}
-""".format(exercise,rep_dict[exercise][0],rep_info_dict[exercise][0],rep_dict[exercise][1],rep_info_dict[exercise][1]))
+""".format(
+            exercise,
+            rep_dict[exercise][0],
+            rep_info_dict[exercise][0],
+            rep_dict[exercise][1],
+            rep_info_dict[exercise][1],
+        )
+    )
 
     return 0
 
 
-
 ##### Exercises #####
-''' ### Generalised function for each exercise ###
+""" ### Generalised function for each exercise ###
 
 def (landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict): #add function name
     # Set exercise to reference in dict
@@ -70,40 +80,66 @@ def (landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict): #add function
 
     return stage, completed
     
-'''
+"""
 
-def BicepCurl(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
+
+def BicepCurl(landmarks, mp_pose, stage, completed, rep_dict, rep_info_dict):
     # Set exercise to reference in dict
     exercise = "Bicep Curl"
-    
+
     # Get coordinates of joints
-    shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
-    elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
-    wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
-    
+    shoulder = [
+        landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y,
+    ]
+    elbow = [
+        landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y,
+    ]
+    wrist = [
+        landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y,
+    ]
+
     # Calculate angles
     angle = calculate_angle(shoulder, elbow, wrist)
 
     # Counting reps
-    if angle > 160: # Arm is extended
+    if angle > 160:  # Arm is extended
         stage = "down"
-    if angle < 45 and stage == "down" and completed == False: # Arm is flexed and exercise not complete
-        stage = "up"      
-        completed = CheckComplete(rep_dict,exercise,rep_info_dict) # Return true if complete
-        Display(rep_dict,rep_info_dict,exercise)
-    
+    if (
+        angle < 45 and stage == "down" and completed == False
+    ):  # Arm is flexed and exercise not complete
+        stage = "up"
+        completed = CheckComplete(
+            rep_dict, exercise, rep_info_dict
+        )  # Return true if complete
+        Display(rep_dict, rep_info_dict, exercise)
+
     return stage, completed
 
 
-def Squat(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
+def Squat(landmarks, mp_pose, stage, completed, rep_dict, rep_info_dict):
     # Set exercise to reference in dict
     exercise = "Squat"
 
     # Get coordinates of joints
-    shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
-    hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
-    knee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
-    ankle = [landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x,landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
+    shoulder = [
+        landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y,
+    ]
+    hip = [
+        landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y,
+    ]
+    knee = [
+        landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y,
+    ]
+    ankle = [
+        landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].y,
+    ]
 
     # Calculate angles
     angleUpper = calculate_angle(shoulder, hip, knee)
@@ -114,12 +150,52 @@ def Squat(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
         stage = "down"
     if angleLower > 160 and stage == "down" and completed == False:
         stage = "up"
-        completed = CheckComplete(rep_dict,exercise,rep_info_dict)
-        Display(rep_dict,rep_info_dict,exercise)
-        
+        completed = CheckComplete(rep_dict, exercise, rep_info_dict)
+        Display(rep_dict, rep_info_dict, exercise)
+
     return stage, completed
 
-'''
+
+def Row(landmarks, mp_pose, stage, completed, rep_dict, rep_info_dict):
+    # Set exercise to reference in dict
+    exercise = "Row"
+
+    # Get coordinates of joints
+    shoulder = [
+        landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y,
+    ]
+    hip = [
+        landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y,
+    ]
+    knee = [
+        landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y,
+    ]
+    wrist = [
+        landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y,
+    ]
+    elbow = [
+        landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
+        landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y,
+    ]
+
+    # Calculate angles
+    angle = calculate_angle(shoulder, hip, knee)
+    # Counting reps
+    if wrist[1] > hip[1]:  # add condition for "down" stage
+        stage = "down"
+    if (angle < 135 and elbow[1] <= (shoulder[1]) and stage == "down" and completed == False ):  # add conditions for "up" stage
+        stage = "up"
+        completed = CheckComplete(rep_dict, exercise, rep_info_dict)
+        Display(rep_dict, rep_info_dict, exercise)
+
+    return stage, completed
+
+
+"""
 
 def BenchPress(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
     # Set exercise to reference in dict
@@ -230,29 +306,6 @@ def LatSideRaise(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
     return stage, completed
 
 
-def Row(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict): 
-    # Set exercise to reference in dict
-    exercise = "Row"
-
-    # Get coordinates of joints
-    shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
-    hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
-    knee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
-    
-    # Calculate angles
-    angle = calculate_angle(shoulder,hip,knee)
-
-    # Counting reps
-    if ? : #add condition for "down" stage
-        stage = "down"
-    if ? and stage == "down" and completed == False: #add conditions for "up" stage
-        stage = "up"
-        completed = CheckComplete(rep_dict,exercise,rep_info_dict)
-        Display(rep_dict,rep_info_dict,exercise)
-        
-    return stage, completed
-
-
 def ShoulderPress(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
     # Set exercise to reference in dict
     exercise = "Shoulder Press"
@@ -321,4 +374,4 @@ def TricepExtension(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict)
         
     return stage, completed
     
-'''
+"""
