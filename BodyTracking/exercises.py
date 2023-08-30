@@ -373,5 +373,26 @@ def TricepExtension(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict)
         Display(rep_dict,rep_info_dict,exercise)
         
     return stage, completed
+
+
+    def RDL(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict): 
+    # Set exercise to reference in dict
+    exercise = "Romanian Deadlift" 
+
+    # Get coordinates of joints
+    joint = [landmarks[mp_pose.PoseLandmark."JOINT_REFERENCE".value].x,landmarks[mp_pose.PoseLandmark."JOINT_REFERENCE".value].y]
+
+    # Calculate angles
+    angle = calculate_angle(joint1, joint2, joint3) #add joint names
+
+    # Counting reps
+    if ? : #add condition for "down" stage
+        stage = "down"
+    if ? and stage == "down" and completed == False: #add conditions for "up" stage
+        stage = "up"
+        completed = CheckComplete(rep_dict,exercise,rep_info_dict)
+        Display(rep_dict,rep_info_dict,exercise)
+        
+    return stage, completed
     
 """

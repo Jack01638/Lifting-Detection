@@ -40,10 +40,24 @@ rep_dict = (
         set up sets and reps
 ###
 """
+#Push Day
+rep_dict["Bench Press"] = [7,20]            #6 sets of 15
+rep_dict["Shoulder Press"] = [5,15]         #6 sets of 15
+rep_dict["Tricep Extension"] = [5,12]       #6 sets of 12
+rep_dict["Chest Flye"] = [4,12]             #5 sets of 12
 
-rep_dict["Bicep Curl"] = [5, 10]  # for testing purposes, 6 sets of 10 reps bicep curls
-rep_dict["Squat"] = [5, 12]
-rep_dict["Row"] = [10, 15]
+#Pull Day
+rep_dict["Row"] = [9, 15]                   #10 sets of 15
+rep_dict["Bicep Curl"] = [7, 12]            #8 sets of 12
+rep_dict["Lateral Side Raise"] = [5,8]      #6 sets of 8
+rep_dict["Dumbbell Shrug"] = [5,15]         #6 sets of 15
+
+#Leg Day
+rep_dict["Standing Calf Raises"] = [7,30]   #8 sets of 30
+rep_dict["Squat"] = [5, 12]                 #6 sets of 12
+rep_dict["Deadlift"] = [5,12]               #6 sets of 12
+rep_dict["Romanian Deadlift"] = [5,15]      #6 sets of 15
+
 # Create deep copy of dict for reference numbers
 rep_info_dict = copy.deepcopy(rep_dict)
 
