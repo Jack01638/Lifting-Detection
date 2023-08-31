@@ -42,7 +42,7 @@ rep_dict = (
 """
 #Push Day
 rep_dict["Bench Press"] = [7,20]            #6 sets of 15
-rep_dict["Shoulder Press"] = [5,15]         #6 sets of 15
+rep_dict["Shoulder Press"] = [5,12]         #6 sets of 12
 rep_dict["Tricep Extension"] = [5,12]       #6 sets of 12
 rep_dict["Chest Flye"] = [4,12]             #5 sets of 12
 
@@ -94,7 +94,7 @@ with mp_pose.Pose(
         # Extract landmarks
         try:
             ### Exercise Function HERE ### (will depend on training plan etc)
-            stage, completed = Row(
+            stage, completed = ShoulderPress(
                 landmarks, mp_pose, stage, completed, rep_dict, rep_info_dict
             )
             ###          ###           ###
