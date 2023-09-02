@@ -72,8 +72,7 @@ cap = cv2.VideoCapture(0)
 
 ## Setup mediapipe instance
 with mp_pose.Pose(
-    min_detection_confidence=0.8, min_tracking_confidence=0.8
-) as pose:  # start tracking and detection
+    min_detection_confidence=0.8, min_tracking_confidence=0.8) as pose:  # start tracking and detection
     while cap.isOpened():  # while video feed is on
         ret, frame = cap.read()
 
@@ -94,9 +93,8 @@ with mp_pose.Pose(
         # Extract landmarks
         try:
             ### Exercise Function HERE ### (will depend on training plan etc)
-            stage, completed = ShoulderPress(
-                landmarks, mp_pose, stage, completed, rep_dict, rep_info_dict
-            )
+            stage, completed = BicepCurl(
+                landmarks, mp_pose, stage, completed, rep_dict, rep_info_dict)
             ###          ###           ###
 
         except:
