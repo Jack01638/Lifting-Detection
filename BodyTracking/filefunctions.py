@@ -3,8 +3,9 @@
 
 ### Check for saved file
 def CheckFile():
-    # check if data.txt in "data" folder
-    # if in folder, return true
+    #by default data.txt is always in data folder
+    #check if has data or is default
+    
     found = True
     return found
 
