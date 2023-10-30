@@ -5,8 +5,13 @@
 def CheckFile():
     # by default data.txt always in data folder
     # first line dictates if default or not. "default" = default, "saved" = been appended to
-    
-    found = True
+    with open ("./data/data.txt") as f:
+        lines = f.readline()
+    if lines.strip() == "default":
+            found = False # not found any saved data, default file
+    else:
+        found == True # file has been edited, not default file
+    f.close()
     return found
 
 
