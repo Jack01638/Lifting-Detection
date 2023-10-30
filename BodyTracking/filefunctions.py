@@ -3,8 +3,8 @@
 
 ### Check for saved file
 def CheckFile():
-    #by default data.txt is always in data folder
-    #check if has data or is default
+    # by default data.txt always in data folder
+    # first line dictates if default or not. "default" = default, "saved" = been appended to
     
     found = True
     return found
