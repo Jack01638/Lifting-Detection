@@ -5,9 +5,9 @@
 def CheckFile():
     # first line dictates if default or not. "default" = default, "saved" = been appended to
     with open ("./data/data.txt") as f:
-        lines = f.readline()
+        line = f.readline()
 
-    if lines.strip() == "default":
+    if line.strip() == "default":
             found = False # not found any saved data, default file
     else:
         found == True # file has been edited, not default file
@@ -20,31 +20,39 @@ def CheckFile():
 
 ### Read file into dict from data.txt
 def ReadFile():
-    #read line by line:
-        # store each line in 2d array
-        # [1 if exercise being used,exercise name, total sets - 1, total reps]
-    return 0 # return array with file data
+    exercise_data = [] # store data to here
+
+    with open ("./data/data.txt") as f:
+        lines = f.readlines() # read line by line
+    
+    for l in lines:
+        values = l.strip().split(',')
+        exercise_data.append(values) # store each exercise separately in 2d array
+
+    exercise_data.pop(0) # remove "default" line
+
+    return exercise_data
 
 
 
 ### Display the file array thats been read in from data.txt
-def ViewFile():
-    # only view if been read in
-    # print list in following format:
-    '''
-    Exercise Name - Sets + 1 / Reps
-    ---------------------------
-    Bicep Curl - 10 / 12
-    Row - 8 / 15
-    '''
-    return 0 # keep returning 0 as nothing needs to be returned
+def ViewFile(exercise_data):
+    data = exercise_data
+
+    print("Exercise  -  Sets , Reps\n------------------------")
+
+    for i in data: # print each exercise line
+        print("{} - {} , {}".format(i[0],i[1],i[2]))
+
+    return 0
 
 
 
-### Load in and use the data file
+### Load in and use the data file Once this is called, program will continue to computer vision
 def LoadFile():
-    # using array from ReadFile(), load each exercuse into the dictinary
+    # using array from ReadFile(), load each exercise into the dictinary
     # make sure this function is called before we make a deep copy, or make a new deep copy of the new one after so ensure rep_dict_info is correct
+    #
     return 0
 
 
