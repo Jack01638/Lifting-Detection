@@ -3,7 +3,6 @@
 
 ### Check for saved file
 def CheckFile():
-    # by default data.txt always in data folder
     # first line dictates if default or not. "default" = default, "saved" = been appended to
     with open ("./data/data.txt") as f:
         lines = f.readline()
