@@ -1,4 +1,25 @@
+import copy
+
 ### Functions for reading writing and deleting data file
+
+
+### Main Menu display and get option
+def MainMenu():
+
+    option = input("""=-=-=Main Menu=-=-=
+What you like to do?
+                   
+1 - Load in the saved workout
+2 - Create a new workout to save
+3 - Edit the existing saved workout
+4 - Delete the saved workout""")
+    
+    valid = InputIntValidation(option,1,4) #check input is valid
+
+    if valid == True:
+        return option
+    else:
+        return 0
 
 
 ### Check for saved file
@@ -49,11 +70,15 @@ def ViewFile(exercise_data):
 
 
 ### Load in and use the data file Once this is called, program will continue to computer vision
-def LoadFile():
-    # using array from ReadFile(), load each exercise into the dictinary
-    # make sure this function is called before we make a deep copy, or make a new deep copy of the new one after so ensure rep_dict_info is correct
-    #
-    return 0
+def LoadFile(rep_dict,exercise_data):
+
+    for i in exercise_data: #load in array as dict
+        rep_dict[i[0]] = [i[1],i[2]]
+
+    #make deep copy of dict
+    
+    deepDict = copy.deepcopy(rep_dict)
+    return rep_dict, deepDict
 
 
 
@@ -82,3 +107,21 @@ def DeleteFile():
     # confirm deltetion
     # set data.txt to empty sets/reps
     return 0
+
+
+### Check if an input is valid
+def InputIntValidation(input, minValue, maxValue):
+    valid = False
+
+    try: #attempt to make sure input is an integer
+        int(input)
+    except:
+        print("Invalid Input: Value is not a number")
+        return 0
+    
+    if input >= minValue and input <= maxValue: #check value is within range
+        valid = True
+    else:
+        print("Invalid Input: Value is not within range")
+
+    return valid
