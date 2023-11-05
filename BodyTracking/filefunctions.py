@@ -17,15 +17,15 @@ What you like to do?
     valid = InputIntValidation(option,1,4) #check input is valid
 
     if valid == True:
-        return option
+        return int(option),valid
     else:
-        return 0
+        return 0,
 
 
 ### Check for saved file
 def CheckFile():
     # first line dictates if default or not. "default" = default, "saved" = been appended to
-    with open ("./data/data.txt") as f:
+    with open ("C:/Users/Jackr/OneDrive/Documents/GitHub/Lifting-Detection/BodyTracking/data/data.txt") as f:
         line = f.readline()
 
     if line.strip() == "default":
@@ -43,14 +43,17 @@ def CheckFile():
 def ReadFile():
     exercise_data = [] # store data to here
 
-    with open ("./data/data.txt") as f:
+    with open ("C:/Users/Jackr/OneDrive/Documents/GitHub/Lifting-Detection/BodyTracking/data/data.txt") as f:
         lines = f.readlines() # read line by line
+        
+    lines.pop(0)
+    lines.pop(1)
     
     for l in lines:
         values = l.strip().split(',')
         exercise_data.append(values) # store each exercise separately in 2d array
 
-    exercise_data.pop(0) # remove "default" line
+   # exercise_data.pop(0) # remove "default" line
 
     return exercise_data
 
@@ -119,7 +122,7 @@ def InputIntValidation(input, minValue, maxValue):
         print("Invalid Input: Value is not a number")
         return 0
     
-    if input >= minValue and input <= maxValue: #check value is within range
+    if int(input) >= minValue and int(input) <= maxValue: #check value is within range
         valid = True
     else:
         print("Invalid Input: Value is not within range")

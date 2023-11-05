@@ -2,7 +2,6 @@
 import numpy as np
 import cv2
 import mediapipe as mp
-import copy
 from exercises import *
 from filefunctions import *
 
@@ -15,7 +14,7 @@ rep_dict = ({})  # exercise names in rep dict must match exercise variable names
 
 ### Init Functions ============================================================
 defaultFile = CheckFile()
-if defaultFile == True:
+if defaultFile == False: #returns false if file is empty and default
     print("No saved data. Loading Empty Sets/Reps...")
 
 readInData = ReadFile() # read file into array
@@ -28,8 +27,18 @@ print("File loaded in successfully!")
 
 ValidMenuInput = 0
 while ValidMenuInput != True: # while input to the menu is not valid, continue on menu page
-    MainMenu()
+    menuChoice,ValidMenuInput = MainMenu()
 
+#no switch cases in ppython 3.9 :( use if statements
+#already input checking in functions, no need for it here
+if menuChoice == 1:                 #Load in saved file workout and start workout        
+    pass 
+if menuChoice == 2:                 #Create a new workout to do  
+    pass
+if menuChoice == 3:                 #Edit existing workout      
+    pass
+if menuChoice == 4:                 #Delete existing workout
+    pass
 
 
 

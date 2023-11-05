@@ -1,5 +1,4 @@
 default
-
 Bench Press,0,0  
 Shoulder Press,0,0      
 Tricep Extension,0,0       
