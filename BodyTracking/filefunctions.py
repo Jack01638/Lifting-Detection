@@ -47,7 +47,6 @@ def ReadFile():
         lines = f.readlines() # read line by line
         
     lines.pop(0)
-    lines.pop(1)
     
     for l in lines:
         values = l.strip().split(',')
