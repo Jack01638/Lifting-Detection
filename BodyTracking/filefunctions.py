@@ -50,7 +50,8 @@ def ReadFile():
     
     for l in lines:
         values = l.strip().split(',')
-        exercise_data.append(values) # store each exercise separately in 2d array
+        #exercise_data.append(values) # store each exercise separately in 2d array
+        exercise_data.append([values[0]] + [int(val) for val in values[1:]])
 
    # exercise_data.pop(0) # remove "default" line
 

@@ -11,6 +11,8 @@ from filefunctions import *
 stage = None
 completed = False
 rep_dict = ({})  # exercise names in rep dict must match exercise variable names in exercise functions
+count = 0        # check if to move to new exercise
+fullWorkoutFinished = False
 
 ### Init Functions ============================================================
 defaultFile = CheckFile()
@@ -23,15 +25,17 @@ rep_dict, rep_deep_dict = LoadFile(rep_dict,readInData) # load array into dict (
 
 print("File loaded in successfully!")
 
+workout = int(input("What workout are you doing?\n1. Push\n2. Pull\n3. Legs"))
 ### Display Main Menu =========================================================
 
 ValidMenuInput = 0
 while ValidMenuInput != True: # while input to the menu is not valid, continue on menu page
     menuChoice,ValidMenuInput = MainMenu()
 
-#no switch cases in ppython 3.9 :( use if statements
+
 #already input checking in functions, no need for it here
-if menuChoice == 1:                 #Load in saved file workout and start workout        
+if menuChoice == 1:                 #use rep_dict etc to start workout
+                                    #(store lists of workouts eg workout1_list = push workout, workout2_list = pull, workout3_list = legs)       
     pass 
 if menuChoice == 2:                 #Create a new workout to do  
     pass
@@ -40,7 +44,8 @@ if menuChoice == 3:                 #Edit existing workout
 if menuChoice == 4:                 #Delete existing workout
     pass
 
-
+print(rep_deep_dict)
+print(rep_dict)
 
 
 # #Push Day
@@ -75,7 +80,7 @@ cap = cv2.VideoCapture(0)
 
 # Setup mediapipe instance
 with mp_pose.Pose(
-    min_detection_confidence=0.8, min_tracking_confidence=0.8) as pose:  # start tracking and detection
+    min_detection_confidence=0.6, min_tracking_confidence=0.6) as pose:  # start tracking and detection
     while cap.isOpened():  # while video feed is on
         ret, frame = cap.read()
 
@@ -86,24 +91,70 @@ with mp_pose.Pose(
         # Make detection
         results = pose.process(image)
         try:
-            landmarks = results.pose_landmarks.landmark
-        except:
-            pass
+            if results.pose_landmarks is not None:
+                landmarks = results.pose_landmarks.landmark
+        except Exception as e:
+            print(e)
         # Recolor back to BGR
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
 
-        # Extract landmarks                                                         #
-        try:                                                                        #
-            ### Exercise Function HERE ### (will depend on training plan etc)       #
-            stage, completed = BicepCurl(                                           #
-                landmarks, mp_pose, stage, completed, rep_dict, rep_deep_dict)      #
-            ###          ###           ###                                          #
+
+        # Extract landmarks                                                         
+        try:  
+            if workout == 1:    #Push
+                if completed == True:
+                    count += 1
+                    completed = False
+                if count == 0:
+                    pass
+                if count == 1:
+                    pass
+                if count == 2:
+                    pass        # Dumbbell shrug
+                if count == 3:
+                    pass
+                if count == 4:  # Workout finished
+                    fullWorkoutFinished = True
+                    workout = 0 # stop checking for any workouts
+
+            elif workout == 2:  #Pull
+                if completed == True:
+                    count += 1
+                    completed = False
+                if count == 0:
+                    stage, completed = BicepCurl(landmarks, mp_pose, stage, completed, rep_dict, rep_deep_dict) 
+                if count == 1:
+                    stage, completed = LatSideRaise(landmarks, mp_pose, stage, completed, rep_dict, rep_deep_dict) 
+                if count == 2:
+                    pass        # Dumbbell shrug
+                if count == 3:
+                    stage, completed = Row(landmarks, mp_pose, stage, completed, rep_dict, rep_deep_dict)
+                if count == 4:  # Workout finished
+                    fullWorkoutFinished = True
+                    workout = 0 # stop checking for any workouts
+
+            elif workout == 3:  #Legs
+                if completed == True:
+                    count += 1
+                    completed = False
+                if count == 0:
+                    pass
+                if count == 1:
+                    pass
+                if count == 2:
+                    pass        # Dumbbell shrug
+                if count == 3:
+                    pass
+                if count == 4:  # Workout finished
+                    fullWorkoutFinished = True
+                    workout = 0 # stop checking for any workouts 
+                                       
 
 
-        except: # if error with exercise function
-            pass
+        except Exception as e: # if error with exercise function
+            print(e)
 
         # Render detections (show limbs and joints on camera feed)
         mp_drawing.draw_landmarks(

@@ -19,7 +19,6 @@ def calculate_angle(a, b, c):
 
 def CheckComplete(rep_dict, exercise, rep_info_dict):
     completed = False
-
     # Count down reps
     if rep_dict[exercise][0] >= 0 and rep_dict[exercise][1] > 0:
         rep_dict[exercise][1] -= 1
@@ -33,10 +32,12 @@ def CheckComplete(rep_dict, exercise, rep_info_dict):
     if rep_dict[exercise][0] == 0 and rep_dict[exercise][1] == 0:
         completed = True
 
+    print(completed)
     return completed
 
 
 def Display(rep_dict, rep_info_dict, exercise):
+
     print(
 """Exercise: {}
 Sets Left {} / {}
@@ -81,6 +82,7 @@ def (landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict): #add function
 
 
 def BicepCurl(landmarks, mp_pose, stage, completed, rep_dict, rep_info_dict):
+    
     # Set exercise to reference in dict
     exercise = "Bicep Curl"
 
@@ -101,10 +103,10 @@ def BicepCurl(landmarks, mp_pose, stage, completed, rep_dict, rep_info_dict):
     # Counting reps
     if angle > 160:
         stage = "down"
-    if angle < 45 and stage == "down" and completed == False:
-        stage = "up"
+    if angle < 65 and stage == "down" and completed == False:
         completed = CheckComplete(rep_dict, exercise, rep_info_dict)
         Display(rep_dict, rep_info_dict, exercise)
+        stage = "up"
 
     return stage, completed
 
@@ -201,7 +203,7 @@ def LatSideRaise(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
     # Counting reps
     if wrist[1] > hip[1]:
         stage = "down"
-    if wrist[1] >= shoulder[1] and angle <= 160 and stage == "down" and completed == False:
+    if wrist[1] <= shoulder[1] and angle <= 160 and stage == "down" and completed == False:
         stage = "up"
         completed = CheckComplete(rep_dict,exercise,rep_info_dict)
         Display(rep_dict,rep_info_dict,exercise)
@@ -240,8 +242,8 @@ def ShoulderPress(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
     return stage, completed
 
 
-"""
 
+"""
 def BenchPress(landmarks, mp_pose, stage, completed,rep_dict,rep_info_dict):
     # Set exercise to reference in dict
     exercise = "Bench Press" #add exercise name

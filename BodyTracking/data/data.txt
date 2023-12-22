@@ -1,13 +1,13 @@
 default
-Bench Press,0,0  
-Shoulder Press,0,0      
-Tricep Extension,0,0       
-Chest Flye,0,0       
-Row,0,0                 
-Bicep Curl,0,0          
-Lateral Side Raise,0,0     
-Dumbbell Shrug,0,0         
-Standing Calf Raises,0,0  
-Squat,0,0                 
-Deadlift,0,0                
-Romanian Deadlift,0,0 
+Bench Press,0,0
+Shoulder Press,0,0
+Tricep Extension,0,0
+Chest Flye,0,0
+Row,9,15
+Bicep Curl,7,12
+Lateral Side Raise,5,8
+Dumbbell Shrug,5,15
+Standing Calf Raises,0,0
+Squat,0,0
+Deadlift,0,0
+Romanian Deadlift,0,0
