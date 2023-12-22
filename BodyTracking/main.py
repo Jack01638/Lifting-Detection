@@ -33,9 +33,7 @@ while ValidMenuInput != True: # while input to the menu is not valid, continue o
     menuChoice,ValidMenuInput = MainMenu()
 
 
-#already input checking in functions, no need for it here
-if menuChoice == 1:                 #use rep_dict etc to start workout
-                                    #(store lists of workouts eg workout1_list = push workout, workout2_list = pull, workout3_list = legs)       
+if menuChoice == 1:                 #use rep_dict etc to start workout     
     pass 
 if menuChoice == 2:                 #Create a new workout to do  
     pass
@@ -44,10 +42,8 @@ if menuChoice == 3:                 #Edit existing workout
 if menuChoice == 4:                 #Delete existing workout
     pass
 
-print(rep_deep_dict)
-print(rep_dict)
 
-
+''' Dictionary of Exercise Lists
 # #Push Day
 # rep_dict["Bench Press"] = [7,20]            #6 sets of 15
 # rep_dict["Shoulder Press"] = [5,12]         #6 sets of 12
@@ -65,9 +61,7 @@ print(rep_dict)
 # rep_dict["Squat"] = [5, 12]                 #6 sets of 12
 # rep_dict["Deadlift"] = [5,12]               #6 sets of 12
 # rep_dict["Romanian Deadlift"] = [5,15]      #6 sets of 15
-
-# Create deep copy of dict for reference numbers
-# rep_info_dict = copy.deepcopy(rep_dict)
+'''
 
 
 ### Mediapipe Tracking & Detection ============================================
@@ -108,16 +102,17 @@ with mp_pose.Pose(
                     count += 1
                     completed = False
                 if count == 0:
-                    pass
+                    pass        # Bench Press
                 if count == 1:
-                    pass
+                    pass        # Shoulder Press
                 if count == 2:
-                    pass        # Dumbbell shrug
+                    pass        # Tricep Extensions
                 if count == 3:
-                    pass
+                    pass        # Chest Flyes
                 if count == 4:  # Workout finished
                     fullWorkoutFinished = True
                     workout = 0 # stop checking for any workouts
+                    LogCompletedWorkout("Push")
 
             elif workout == 2:  #Pull
                 if completed == True:
@@ -134,26 +129,28 @@ with mp_pose.Pose(
                 if count == 4:  # Workout finished
                     fullWorkoutFinished = True
                     workout = 0 # stop checking for any workouts
+                    LogCompletedWorkout("Pull")
 
             elif workout == 3:  #Legs
                 if completed == True:
                     count += 1
                     completed = False
                 if count == 0:
-                    pass
+                    pass        # Squat
                 if count == 1:
-                    pass
+                    pass        # Deadlift
                 if count == 2:
-                    pass        # Dumbbell shrug
+                    pass        # RDL
                 if count == 3:
-                    pass
+                    pass        # Calf Raises
                 if count == 4:  # Workout finished
                     fullWorkoutFinished = True
-                    workout = 0 # stop checking for any workouts 
+                    workout = 0 # stop checking for any workouts
+                    LogCompletedWorkout("Legs") 
                                        
 
 
-        except Exception as e: # if error with exercise function
+        except Exception as e:
             print(e)
 
         # Render detections (show limbs and joints on camera feed)

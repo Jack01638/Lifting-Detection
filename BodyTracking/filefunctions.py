@@ -128,3 +128,7 @@ def InputIntValidation(input, minValue, maxValue):
         print("Invalid Input: Value is not within range")
 
     return valid
+
+def LogCompletedWorkout(workout):
+    #log workout as completed in excel
+    return 0
